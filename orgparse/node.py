@@ -374,7 +374,12 @@ class OrgBaseNode(Sequence):
     def __iter__(self):
         yield self
         level = self.level
+        nsl = self.next_same_level
         for node in self.env._nodes[self._index + 1:]:
+            if node == nsl:
+                break
+            if ((not nsl) and node.level < level):
+                break
             if node.level > level:
                 yield node
 
